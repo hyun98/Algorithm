@@ -1,2 +1,2 @@
-# PSsolve
+# PS solve
 BOJ, Algospot, Programmers, Leetcode...

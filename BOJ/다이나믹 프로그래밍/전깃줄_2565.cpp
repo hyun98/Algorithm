@@ -37,7 +37,7 @@ int noncross_cnt(int now){
     int mcnt = 0;
     for(int i = now; i < N; i++){
         if(elec[now].dest < elec[i].dest){
-//            cout << " now dest " << elec[now].dest << " next dest :" << elec[i].dest << "  ";
+            cout << " now dest " << elec[now].dest << " next dest :" << elec[i].dest << " \n ";
             mcnt = max(noncross_cnt(i), mcnt);
         }
     }    

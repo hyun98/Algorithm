@@ -10,37 +10,6 @@ int N;
 int cost[1001][3];
 int dp[1001][3];
 
-// int solve(int start, int house, int nowcolor){
-//     cout << "house : " << house << " nowcolor : " << nowcolor << "\n";
-//     if(house == N) return 0;
-    
-//     int &ret = dp[house][nowcolor][start];
-//     if(ret != -1) return ret;
-    
-//     vector<int> temp;   
-
-//     for(int i = 0; i < 3; i++){
-//         int next_color = i;
-//         if(next_color == nowcolor) continue;
-//         if(house == N-1){
-//             if(next_color == start) continue;
-//             temp.push_back(solve(start, house+1, next_color));
-//         }
-//         else{
-//             temp.push_back(solve(start, house+1, next_color));
-//         }
-//         cout << temp.back() << "\n";
-//     }
-//     ret = INF;
-    
-//     for(auto w : temp){
-//         // cout << w << "\n";
-//         ret = min(ret, w);
-//     }
-//     cout << ret << "\n";
-//     return ret += cost[house][nowcolor];
-// }
-
 int solve(int start){
     dp[0][0] = INF;
     dp[0][1] = INF;

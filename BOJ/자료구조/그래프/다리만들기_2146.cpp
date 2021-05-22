@@ -23,9 +23,10 @@ void input(){
     }
 }
 
+// 섬을 탐색하며 현재 섬의 경계를 찾아냄
 void island_boundary(int r, int c){
-    vector<point> land;
-    queue<point> que;
+    vector<point> land;     // 현재 섬의 경계를 저장하는 배열
+    queue<point> que;       // 현재 탐색중인 섬
     que.push({r, c});
     
     visited[r][c] = true;
@@ -34,6 +35,7 @@ void island_boundary(int r, int c){
         point now = que.front();
         que.pop();
         
+        // 현재 좌표가 섬의 경계좌표인지 확인
         for(int i = 0; i < 4; i++){
             int nr = now.r + dr[i];
             int nc = now.c + dc[i];
@@ -44,6 +46,7 @@ void island_boundary(int r, int c){
             }
         }
         
+        // 현재 섬의 다른 육지부분을 que에 넣어준다
         for(int i = 0; i < 4; i++){
             int nr = now.r + dr[i];
             int nc = now.c + dc[i];
@@ -57,10 +60,12 @@ void island_boundary(int r, int c){
     boundary.push_back(land);
 }
 
+// 좌표간의 거리를 반환
 int dist(point &a, point &b){
     return abs(a.r - b.r) + abs(a.c - b.c) - 1;
 }
 
+//a섬과 b섬의 경계를 돌면서 최소거리를 반환
 int min_dist(vector<point> &a, vector<point> &b){
     int min_d = INF;
     for(int i = 0; i < a.size(); i++){

@@ -23,8 +23,6 @@ public:
             indg[Y]++;
         }
         cin >> W;
-        
-//        cout << "input done\n";
     }
     
     void BFS(){

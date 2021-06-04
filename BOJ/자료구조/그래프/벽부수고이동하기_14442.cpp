@@ -3,9 +3,9 @@
 using namespace std;
 
 struct P{
-    int r, c;
-    int cnt = 1;
-    int wall = 0;
+    int r, c;       // 현재 위치
+    int cnt = 1;    // 지금까지 지나온 칸 수
+    int wall = 0;   // 지금까지 부순 벽의 수 
 };
 
 int N, M, K;

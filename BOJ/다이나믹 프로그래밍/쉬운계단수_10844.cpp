@@ -20,8 +20,8 @@ void solve(){
             }
             else if(j == 9) dp[i][j] = dp[i-1][j-1] % MOD;
             else{
-                dp[i][j] = dp[i-1][j-1] % MOD;
-                dp[i][j] += (dp[i-1][j+1] % MOD);
+                dp[i][j] = (dp[i][j] + dp[i-1][j-1] % MOD);
+                dp[i][j] = (dp[i][j] + dp[i-1][j+1] % MOD);
             }
             ans[i] += (dp[i][j] % MOD);
         }

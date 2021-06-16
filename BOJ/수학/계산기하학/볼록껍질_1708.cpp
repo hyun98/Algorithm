@@ -61,7 +61,7 @@ void convex_hull(){
     stk.push_back(0); stk.push_back(1);
     
     while(ed != N){    // ed는 마지막 점까지 확인
-        while(stk.size() >= 2){     //mid 고정
+        while(stk.size() >= 2){
             int mid = stk.back();
             stk.pop_back();
             int st = stk.back();

@@ -1,5 +1,3 @@
-//À§»óÁ¤·Ä(Topological Sort)
-//DFS¸¦ »ç¿ëÇÑ..
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,22 +7,18 @@ using namespace std;
 
 vector< vector<int> > adj;
 
-//±×·¡ÇÁ Á¤·Ä ±âÁØ :
 void makeGraph(const vector<string>& words){
-    //¾ËÆÄºªÀÇ ¼ö°¡ 26°³ÀÌ¹Ç·Î ÀÎÁ¢Çà·ÄÀ» »ç¿ëÇØµµ ¸Ş¸ğ¸®¿¡ Å« ¿µÇâÀ» ÁÖÁö¾Ê´Â´Ù
-    adj = vector<vector<int>> (26, vector<int> (26, 0));
+    adj = vector< vector<int> > (26, vector<int> (26, 0));
 
     for(int i = 0; i < words.size() - 1; i++){
-        // Ã¹ ¹øÂ° ´Ü¾îºÎÅÍ ¸¶Áö¸· ´Ü¾î±îÁö 2°³¾¿ ºñ±³
         int len = min(words[i].size(), words[i+1].size());
-        // °°Àº ´Ü¾î´Â ¾øÀ¸¹Ç·Î ´õ ÂªÀº ´Ü¾î¸¦ ±âÁØÀ¸·Î °°ÀºÀ§Ä¡¿¡ ÀÖ´Â ¾ËÆÄºªÀ» ¼­·Î ºñ±³ÇÑ´Ù
         for(int k = 0; k < len; k++){
-            // i ¹øÂ° ´Ü¾î¿Í ±× ´ÙÀ½ ´Ü¾îÀÇ k¹øÂ°(°°Àº À§Ä¡ÀÇ) ¾ËÆÄºª ºñ±³ -> ¼­·Î ´Ù¸£¸é i¹øÂ° ´Ü¾îÀÇ k¹øÂ° ¾ËÆÄºªÀÌ ¹«Á¶°Ç ºü¸¥°ÍÀÓ
             if(words[i][k] != words[i+1][k]){
                 int a = words[i][k] - 'a';
                 int b = words[i+1][k] - 'a';
-
-                adj[a][b] = 1;  //a¹øÂ° ÇàÀÇ ¾ËÆÄºª ´ÙÀ½¿¡ b¹øÂ° ¾ËÆÄºªÀÌ ¿Â´Ù´Â ¸».
+                
+                // a ë‹¤ìŒì— bê°€ ë‚˜ì™€ì•¼ í•œë‹¤
+                adj[a][b] = 1;
                 break;
             }
         }
@@ -46,7 +40,6 @@ vector<int> topologicalSort(){
     visited = vector<bool> (26, false);
     order.clear();
 
-    //¾ÆÁ÷ ¹æ¹®ÇÏÁö ¾ÊÀº ¾ËÆÄºª ºÎÅÍ dfs¸¦ ¹İº¹ÀûÀ¸·Î ½ÃÀÛ
     for(int i = 0; i < adj.size(); i++){
         if(!visited[i]) dfs(i);
     }
@@ -54,7 +47,6 @@ vector<int> topologicalSort(){
 
     for(int i = 0; i < adj.size(); i++){
         for(int j = i+1; j < adj.size(); j++){
-            //order¿¡¼­ µŞ ¾ËÆÄºªÀÌ ¾Õ ¾ËÆÄºª º¸´Ù ¾Õ¼±´Ù´Â Á¤º¸(adj[µÚ][¾Õ] == 1)°¡ ÀÖÀ¸¸é fail
             if(adj[order[j]][order[i]]){
                 return vector<int>();
             }
@@ -70,10 +62,8 @@ void dic_test(){
     vector<string> words;
     for(int i = 0; i < N; i++){
         cin >> input;
-        // ´Ü¾îµéÀÌ ÀÔ·ÂµÇ°í words¶ó´Â º¤ÅÍ¿¡ µé¾î°¨
         words.push_back(input);
     }
-    //¸¸µé¾îÁø words º¤ÅÍµé·Î ±×·¡ÇÁ »ı¼º
     makeGraph(words);
 
     vector<int> to = topologicalSort();

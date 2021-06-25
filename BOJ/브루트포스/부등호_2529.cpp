@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int N, max_sum, min_sum = 10e9+7;
+int N, max_sum, min_sum = 1e9+7;
 int Op[10];
 bool visited[10];
 vector<int> arr, result_max, result_min;

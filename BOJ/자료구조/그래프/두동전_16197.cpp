@@ -13,6 +13,7 @@ vector< pii > startP;
 int dr[4] = {0, 0, 1, -1}, dc[4] = {1, -1, 0, 0};
 
 void input(){
+    // Map에서 벗어나는 경우는 -1로 설정
     memset(Map, -1, sizeof(Map));
     
     cin >> N >> M;
@@ -36,7 +37,10 @@ bool isOut(const pii &A){
 }
 
 void dfs(pii A, pii B, int cnt){
+    // 현재 result보다 cnt가 크다면 더이상의 탐색은 불필요
     if(result < cnt) return;
+    
+    // cnt 가 10보다 커지면 result값 갱신
     if(cnt > 10){
         result = min(result, cnt);
         return;

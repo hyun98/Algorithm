@@ -60,7 +60,7 @@ bool isline_intersect(Point &a, Point &b, Point &c, Point &d){
 int isSafe(Point &A){
     Point inf;
     inf.x = 1000000001;
-    inf.y = A.y+1;
+    inf.y = A.y;
     
     int cnt = 0;
     

@@ -23,25 +23,27 @@ void input(){
 
 int findCutVertex(int now, bool isroot){
     
-    // ¹ß°ß ¼ø¼­ ±â·Ï
+    // í˜„ì¬ ì •ì ì˜ ë°©ë¬¸ìˆœì„œ ê¸°ë¡
     discovered[now] = cnt++;
     int ret = discovered[now];
     
     int child = 0;
     for(int i = 0; i < adj[now].size(); i++){
         int next = adj[now][i];
-        // ¹æ¹® ¾ÈÇß´Ù¸é subtree¿¡¼­ °¥ ¼ö ÀÖ´Â °¡Àå ³ôÀº Á¤Á¡ÀÇ ¹øÈ£¸¦ ÀúÀå
+        // ë‹¤ìŒ ì •ì ì„ ë°©ë¬¸í•œì  ì—†ë‹¤ë©´
         if(discovered[next] == -1){
             child++;
             int subtree = findCutVertex(next, false);
             
             if(!isroot && subtree >= discovered[now]){
-                // subtree¿¡¼­ nowÁ¤Á¡ÀÇ Á¶»ó Á¤Á¡µéÀ» ¹æ¹® ÇÒ ¼ö ¾ø´Ù¸é ´ÜÀıÁ¡ÀÌ´Ù
+                // í˜„ì¬ ì •ì ì´ rootê°€ ì•„ë‹ˆê³ 
+                // subtreeì—ì„œ íƒìƒ‰í•  ìˆ˜ ìˆëŠ” ìµœìƒìœ„ ì •ì ì´ í˜„ì¬ ì •ì  ì´í›„ì— ë°œê²¬ëœ ì •ì ì´ë¼ë©´ 
+                // í˜„ì¬ ì •ì ì€ cut vertexê°€ ëœë‹¤.
                 isCutVertex[now] = true;
             }
             ret = min(ret, subtree);
         }
-        // ¹æ¹® ÇÑ °æ¿ì
+        // ë‹¤ìŒ ì •ì ì„ ë°©ë¬¸í•œ ê²½ìš°
         else{
             ret = min(ret, discovered[next]);
         }

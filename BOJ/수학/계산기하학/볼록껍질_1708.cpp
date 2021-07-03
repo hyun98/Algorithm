@@ -57,6 +57,10 @@ void convex_hull(){
     
     sort(points+1, points+N, angle_sort);
     
+    for(int i = 0; i < N; i++){
+        cout <<points[i].x << " " << points[i].y << "\n";
+    }
+    
     int st, mid, ed = 2;
     stk.push_back(0); stk.push_back(1);
     

@@ -20,21 +20,21 @@ vector<int> dist;
 
 struct cmp{
     bool operator()(const A& a, const A& b){
-        // ¿À¸§Â÷¼ø
+        // ì˜¤ë¦„ì°¨ìˆœ
         return a.cost > b.cost;
     }
 };
 
 void input(){
     cin >> V >> E >> K;
-    // KºÎÅÍ K±îÁö ÃÖ´Ü°Å¸®´Â 0
+    // Kë¶€í„° Kê¹Œì§€ ìµœë‹¨ê±°ë¦¬ëŠ” 0
     
     dist.resize(V+1, 1e9+7);
     Graph.resize(V+1);
     int u, v, cost;
     for(int i = 0; i < E; i++){
         cin >> u >> v >> cost;
-        // u¹øÂ° ³ëµå¿¡¼­ v·Î°¡´Â cost¸¦ ÀÔ·Â
+        // uë²ˆì§¸ ë…¸ë“œì—ì„œ vë¡œê°€ëŠ” costë¥¼ ìž…ë ¥
         Graph[u].push_back({v, cost});
     }
 }
@@ -46,13 +46,13 @@ void dijkstra(){
     heap.push({K, 0});
     
     while(!heap.empty()){
-        // KºÎÅÍ now_idx±îÁö 
+        // Kë¶€í„° now_idxê¹Œì§€ 
         int min_cost = heap.top().cost;
         int now_idx = heap.top().idx;
         heap.pop();
         
-        // Áß¿äÇÑ ºÎºÐ
-        // KºÎÅÍ now_idx±îÁöÀÇ ÃÖ¼Ú°ªÀÌ ÀÌ¹Ì ±¸ÇØÁ® ÀÖ´Ù¸é ³Ñ¾î°£´Ù
+        // ì¤‘ìš”í•œ ë¶€ë¶„
+        // Kë¶€í„° now_idxê¹Œì§€ì˜ ìµœì†Ÿê°’ì´ ì´ë¯¸ êµ¬í•´ì ¸ ìžˆë‹¤ë©´ ë„˜ì–´ê°„ë‹¤
         if(min_cost > dist[now_idx]) continue;
         
         for(int i = 0; i < Graph[now_idx].size(); i++){

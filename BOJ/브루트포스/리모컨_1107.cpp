@@ -1,53 +1,41 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
+#include <cstring>
+
+#define MIN(a,b) (a<b ? a : b)
 using namespace std;
 
-bool num[10] = {true, };
-int M, channel, cnt;
-string nearest = "";
+int button[10] = {1,1,1,1,1,1,1,1,1,1};
+int channel, M, min_cnt = 1e9;
 
 void init(){
     cin >> channel >> M;
     int broke;
     for(int i = 0; i < M; i++){
         cin >> broke;
-        num[broke] = false;
+        button[broke] = 0;
     }
-    cnt = channel - 100;
-}
-
-int possible(int N){
-    int len = 0;
-    if(!num[N%10]) return 0;
-    while(N){
-        if(num[N%10]){
-            len++;
-        }
-        N /= 10;
-    }
- 
-    return len;
+    min_cnt = MIN(min_cnt, abs(100 - channel));
 }
 
 
-void solve(){
-     for (int i = 0; i <= 1000000; i++){
-        // i를 이루는 숫자 중 고장난 버튼이 없으면, 숫자길이 반환
-        int len = possible(i);
-        if (len){
-            // 버튼 누르는 횟수가 더 작으면
-            if (cnt > abs(channel - i) + len){
-                cnt = abs(channel - i) + len;
-            }
+void find_pressnum(string num){
+    for(int i = 0; i < 10; i++){
+        if(!button[i]) continue;
+        
+        string temp = num + to_string(i);
+        
+        min_cnt = MIN(min_cnt, abs(channel - stoi(temp)) + temp.length());
+        
+        if(temp.length() < 6){
+            find_pressnum(temp);
         }
     }
 }
 
 int main(){
     init();
-    solve();
-    cout << cnt;
+    if(M < 10) find_pressnum("");
+    
+    cout << min_cnt;
     return 0;
 }

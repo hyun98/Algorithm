@@ -3,7 +3,7 @@
 #include <queue>
 
 #define pii pair<int, int>
-
+#define fastio ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 using namespace std;
 
 const int INF = 1e9+7;
@@ -17,6 +17,7 @@ void input(){
     
     Map = vector<vector<pii > >(V + 1);
     firehouse = vector<int>();
+    dist.clear();
     dist.resize(V+1, INF);
     
     for(int i = 0; i < E; i++){
@@ -34,7 +35,7 @@ void input(){
     }
 }
 
-void Dijstra(){
+void Dijkstra(){
     priority_queue<pii, vector<pii >, greater<pii > > que;
     
     dist[0] = 0;
@@ -57,20 +58,21 @@ void Dijstra(){
             }
         }
     }
+    
+    int res = 0;
+    for(int i = 0; i < firehouse.size(); i++){
+        res += dist[firehouse[i]];
+    }
+    cout << res << "\n";
 }
 
 int main(){
+    fastio
     int test;
     cin >> test;
     while(test--){
-        int res = 0;
         input();
-        Dijstra();
-        
-        for(int i = 0; i < firehouse.size(); i++){
-            res += dist[firehouse[i]];
-        }
-        cout << res << "\n";
+        Dijkstra();
     }
     
     return 0;

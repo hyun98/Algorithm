@@ -13,8 +13,8 @@ typedef long long ll;
 
 using namespace std;
 
-int N, M, H;
-int ladder[31][11][11];
+int N, M, H, Now;
+int ladder[31][11];
 bool is_find;
 
 void input(){
@@ -22,71 +22,66 @@ void input(){
     cin >> N >> M >> H;
     for(int i = 0; i < M; i++){
         cin >> a >> b;
-        ladder[a][b][b+1] = 1;
-        ladder[a][b+1][b] = 1;
+        ladder[a][b] = 1;
     }
 }
 
-void Recursion(int horizon){
-    if(horizon == 0){
-        int cnt = 0;
+bool Riding(){
+    for(int i = 1; i <= N; i++){
+        int line = i;
+        for(int height = 1; height <= H; height++){
+            if(ladder[height][line]) line += 1;
+            else if(ladder[height][line-1]) line -= 1;
+        }
+        if(line != i) return false;
+    }
+    
+    return true;
+}
+
+void Recursion(int nowheight, int horizoncnt){
+    if(horizoncnt == 0){
+        bool tmp = true;
+        // **문제의 부분**
         for(int i = 1; i <= N; i++){
-            if(Riding(i) == i){
-                cnt++;
+            int line = i;
+            for(int height = 1; height <= H; height++){
+                if(ladder[height][line]) line += 1;
+                else if(ladder[height][line-1]) line -= 1;
             }
+            if(line != i) return;
         }
-        if(cnt == N){
-            is_find = true;
-            return;
-        }
-    }
-    
-    for(int i = 1; i <= H; i++){
-        for(int r = 1; r <= N; r++){
-            if(ladder[i][r][r+1] || ladder[i][r-1][r] || ladder[i][r+1][r+2]) continue;
+        if(tmp){
+            cout << Now;
+            exit(0);
         }
     }
     
+    for(int i = nowheight; i <= H; i++){
+        for(int r = 1; r < N; r++){
+            if(ladder[i][r-1] || ladder[i][r+1] || ladder[i][r]) continue;
+            
+            ladder[i][r] = 1;
+            Recursion(i, horizoncnt-1);
+            ladder[i][r] = 0;
+        }
+    }
 }
 
-int Riding(int line){
-    for(int height = 1; height <= H; height++){
-        if(line-1 > 0){
-            if(ladder[height][line-1][line]){
-                line = line-1;
-                continue;
-            }
-        }
-        if(line+1 <= N){
-            if(ladder[height][line][line+1]){
-                line = line+1;
-                continue;
-            }
-        }
-    }
-    
-    return line;
-}
 
 void solve(){
     int horizon = 0;
     while(horizon <= 3){
-        
-        
-        int cnt = 0;
-        for(int i = 1; i <= N; i++){
-            if(Riding(i) == i){
-                cnt++;
-            }
-        }
-        if(cnt == N) break;
+        Now = horizon;
+        Recursion(1, horizon);
         horizon++;
     }
     
-    cout << horizon;
+    cout << -1;
 }
 
 int main(){
+    fasti
     input();
     solve();
     

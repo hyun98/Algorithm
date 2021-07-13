@@ -1,2 +1,2 @@
-# PS solve
+# PS Repository
 BOJ, Algospot, Programmers, Leetcode...

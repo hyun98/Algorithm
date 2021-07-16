@@ -17,19 +17,19 @@ public:
             }
         }
     }
-    // ÇØ´ç ±æ·Î °¡¸é ½ÇÆÐÇÑ´Ù´Â flag¸¦ Ç¥½Ã  0
-    // ÇØ´ç ±æ·Î °¡¸é ¼º°øÇÑ´Ù´Â flag¸¦ Ç¥½Ã  1
-    // default : ÇØ´ç ±æÀº ¾ÆÁ÷ °¡Áö ¾Ê¾ÒÀ½ -1
+    // í•´ë‹¹ ê¸¸ë¡œ ê°€ë©´ ì‹¤íŒ¨í•œë‹¤ëŠ” flagë¥¼ í‘œì‹œ  0
+    // í•´ë‹¹ ê¸¸ë¡œ ê°€ë©´ ì„±ê³µí•œë‹¤ëŠ” flagë¥¼ í‘œì‹œ  1
+    // default : í•´ë‹¹ ê¸¸ì€ ì•„ì§ ê°€ì§€ ì•Šì•˜ìŒ -1
     int find_Path(int r, int c){
         if(r == n-1 && c == n-1) return 1;
         if(r >= n || c >= n) return 0;
 
-        // ³¡±îÁö °£ ÀûÀÌ ÀÖ´Ù¸é 1À» ¹ÝÈ¯, °¥ ¼ö ¾øÀ¸¸é 0¹ÝÈ¯
+        // ëê¹Œì§€ ê°„ ì ì´ ìžˆë‹¤ë©´ 1ì„ ë°˜í™˜, ê°ˆ ìˆ˜ ì—†ìœ¼ë©´ 0ë°˜í™˜
         if(memo[r][c] != -1) return memo[r][c];
         int next = board[r][c];
 
-        // ¾ç °¥·¡±æ ¸ðµÎ ¹üÀ§¸¦ ³Ñ¾î°¡°Å³ª ½ÇÆÐ ÁöÁ¡¿¡ µµ´ÞÇÒ °æ¿ì ÇöÀç ±æÀº ¸ñÀûÁö¿¡ µµ´ÞÇÒ ¼ö ¾ø´Ù´Â ¶æÀÎ 0À» ¹ÝÈ¯
-        // ¾ç °¥·¡±æ Áß ÇÏ³ª¸¸ÀÌ¶óµµ ¸ñÀûÁö¿¡ µµ´ÞÇÏ°Å³ª, ¸ñÀûÁö±îÁö °¥ ¼ö ÀÖ´Â ±æ¿¡ µµÂøÇÑ´Ù¸é ÇöÀç ±æÀº ¸ñÀûÁö¿¡ µµ´ÞÇÒ ¼ö ÀÖ´Ù´Â ¶æÀÎ 1À» ¹ÝÈ¯
+        // ì–‘ ê°ˆëž˜ê¸¸ ëª¨ë‘ ë²”ìœ„ë¥¼ ë„˜ì–´ê°€ê±°ë‚˜ ì‹¤íŒ¨ ì§€ì ì— ë„ë‹¬í•  ê²½ìš° í˜„ìž¬ ê¸¸ì€ ëª©ì ì§€ì— ë„ë‹¬í•  ìˆ˜ ì—†ë‹¤ëŠ” ëœ»ì¸ 0ì„ ë°˜í™˜
+        // ì–‘ ê°ˆëž˜ê¸¸ ì¤‘ í•˜ë‚˜ë§Œì´ë¼ë„ ëª©ì ì§€ì— ë„ë‹¬í•˜ê±°ë‚˜, ëª©ì ì§€ê¹Œì§€ ê°ˆ ìˆ˜ ìžˆëŠ” ê¸¸ì— ë„ì°©í•œë‹¤ë©´ í˜„ìž¬ ê¸¸ì€ ëª©ì ì§€ì— ë„ë‹¬í•  ìˆ˜ ìžˆë‹¤ëŠ” ëœ»ì¸ 1ì„ ë°˜í™˜
         return memo[r][c] = (find_Path(r+next, c) || find_Path(r, c+next));
     }
 };

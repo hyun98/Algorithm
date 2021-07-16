@@ -4,7 +4,7 @@
 
 using namespace std;
 #define ll long long
-// ÃÖÀå Áõ°¡ ºÎºĞ¼ö¿­
+// ìµœì¥ ì¦ê°€ ë¶€ë¶„ìˆ˜ì—´
 class JLIS{
     int n, m;
     int A[101], B[101], dp[101][101];
@@ -27,7 +27,7 @@ public:
         cout << Jlis(-1, -1) - 2 << endl;
     }
     
-    // Àç±ÍÇÔ¼ö·Î ±¸Çö
+    // ì¬ê·€í•¨ìˆ˜ë¡œ êµ¬í˜„
     int Jlis(int indexA, int indexB){
         int &ret = dp[indexA+1][indexB+1];
         if(ret != -1) return ret;
@@ -39,7 +39,7 @@ public:
         
         ll maxElement = max(a, b);
         
-        // solveÀÇ Ã³À½ÀÏ ¶§´Â a¿Í b°¡ ¸ğµÎ numeric min ÀÌ´Ù
+        // solveì˜ ì²˜ìŒì¼ ë•ŒëŠ” aì™€ bê°€ ëª¨ë‘ numeric min ì´ë‹¤
         for(int nextA = indexA+1; nextA < n; nextA++){
             if(maxElement < A[nextA]){
                 ret = max(ret, Jlis(nextA, indexB) + 1);

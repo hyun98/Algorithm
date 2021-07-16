@@ -13,10 +13,10 @@ public:
 
     int Difficulty(string subpi){
 //        cout << subpi << endl;
-        //¸ðµç ¼ýÀÚ°¡ °°À» ¶§
+        //ëª¨ë“  ìˆ«ìžê°€ ê°™ì„ ë•Œ
         if(subpi == string(subpi.size(), subpi[0])) return 1;
 
-        //¼ýÀÚ°¡ µîÂ÷¸¦ 1·Î °¡Áö´Â ¼ö¿­ÀÏ ¶§
+        //ìˆ«ìžê°€ ë“±ì°¨ë¥¼ 1ë¡œ ê°€ì§€ëŠ” ìˆ˜ì—´ì¼ ë•Œ
         bool updown = true;
         int a = subpi[0] - '0';
         int cnt = 1;
@@ -27,17 +27,17 @@ public:
         }
         if(updown && abs(subpi[1] - subpi[0]) == 1) return 2;
 
-        //µÎ ¼ö°¡ ¹ø°¥¾Æ¼­ ³ª¿Ã ¶§
+        //ë‘ ìˆ˜ê°€ ë²ˆê°ˆì•„ì„œ ë‚˜ì˜¬ ë•Œ
         bool alter = true;
         for(int i = 0; i < subpi.size(); i++){
             if(subpi[i] != subpi[i%2]) alter = false;
         }
         if(alter) return 4;
 
-        // µîÂ÷¼ö¿­À» ÀÌ·ê ¶§(µîÂ÷ 1¾Æ´Ô)
+        // ë“±ì°¨ìˆ˜ì—´ì„ ì´ë£° ë•Œ(ë“±ì°¨ 1ì•„ë‹˜)
         if(updown) return 5;
 
-        //³ª¸ÓÁö °æ¿ì
+        //ë‚˜ë¨¸ì§€ ê²½ìš°
         return 10;
     }
     

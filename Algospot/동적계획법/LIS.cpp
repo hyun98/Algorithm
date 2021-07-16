@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-// ÃÖÀå Áõ°¡ ºÎºĞ¼ö¿­
+// ìµœì¥ ì¦ê°€ ë¶€ë¶„ìˆ˜ì—´
 class LIS{
     int n;
     vector<int> arr;
@@ -24,7 +24,7 @@ public:
         }
         cout << longest << endl;
     }
-    // Àç±ÍÇÔ¼ö·Î ±¸Çö top-down¹æ½Ä
+    // ì¬ê·€í•¨ìˆ˜ë¡œ êµ¬í˜„ top-downë°©ì‹
     int findLIS(int pos){
         if(dp[pos] != 0) return dp[pos];
         

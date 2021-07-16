@@ -21,7 +21,7 @@ public:
         cout << result << endl;
     }
     
-    // n°³ÀÇ Á¤»ç°¢ÇüÀ¸·Î ÀÌ·ç¾î Áö°í, Á¦ÀÏ À§Ãş¿¡ top°³ÀÇ Á¤»ç°¢ÇüÀÌ ³õ¿©Áø Poly
+    // nê°œì˜ ì •ì‚¬ê°í˜•ìœ¼ë¡œ ì´ë£¨ì–´ ì§€ê³ , ì œì¼ ìœ„ì¸µì— topê°œì˜ ì •ì‚¬ê°í˜•ì´ ë†“ì—¬ì§„ Poly
     int polynum(int n, int top){
         if(n == top) return 1;
         
@@ -29,7 +29,7 @@ public:
         if(ret != -1) return ret;
         ret = 0;
         
-        //´ÙÀ½ Ãş¿¡ ½×À» Á¤»ç°¢ÇüÀÇ °³¼ö for¹®
+        //ë‹¤ìŒ ì¸µì— ìŒ“ì„ ì •ì‚¬ê°í˜•ì˜ ê°œìˆ˜ forë¬¸
         for(int i = 1; i <= n-top; i++){
             int mul = top + i - 1;
             mul = mul * polynum(n-top, i);

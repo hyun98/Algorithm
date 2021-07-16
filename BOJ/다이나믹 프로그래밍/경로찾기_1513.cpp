@@ -14,7 +14,7 @@ typedef long long ll;
 using namespace std;
 
 int N, M, C;
-int dp[51][51][51][51];
+int dp[51][51][51];
 int Map[51][51];
 
 void input(){
@@ -27,17 +27,19 @@ void input(){
     memset(dp, -1, sizeof(dp));
 }
 
-int path_num(int r, int c, int gcnt, int lastg){
+int path_num(int r, int c, int gnum, int prev){
+    if(r == N && c == M) return 1;
     
-    int &ret = dp[r][c][gcnt][lastg];
+    int &ret = dp[r][c][gnum];
     if(ret != -1) return ret;
     
-    if(Map[r+1][c] > lastg){
-        path_num(r+1, c, gcnt+1, Map[r+1][c]);
+    ret = 0;
+    
+    if(Map[r][c] == 0){
+        dp[r][c][0] 
     }
     
-    if(Map[r+1][c] == 0)
-    
+    dp[r][c][0]
     path_num(r+1, c, )
 }
 

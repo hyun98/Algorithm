@@ -40,24 +40,24 @@ public:
         }
     }
     
-    //p :íŒ¨í„´ë‹¨ì–´ì˜ ì¸ë±ìŠ¤, s :filenameì˜ ì¸ë±ìŠ¤, i :filenameì„ ì§€ì •í•´ì£¼ëŠ” filenamesì˜ ì¸ë±ìŠ¤ 
+    //p :ÆĞÅÏ´Ü¾îÀÇ ÀÎµ¦½º, s :filenameÀÇ ÀÎµ¦½º, i :filenameÀ» ÁöÁ¤ÇØÁÖ´Â filenamesÀÇ ÀÎµ¦½º 
     int matching(int p, int s, int i){
         if(cache[p][s] != -1) return cache[p][s];
         
         while(p < pattern.size() && s < filenames[i].size() 
               && (pattern[p] == '?' || pattern[p] == filenames[i][s])){
-            // 1ê¸€ìì”© ìˆœí™˜
+            // 1±ÛÀÚ¾¿ ¼øÈ¯
             return cache[p][s] = matching(p+1, s+1, i);
         }
         
-        // íŒ¨í„´ ëì— ë„ë‹¬í•´ì„œ ëë‚œ ê²½ìš°ë¼ë©´ ë¹„êµ ë¬¸ìì—´ë„ ëì— ë„ë‹¬í•´ì•¼í•¨
+        // ÆĞÅÏ ³¡¿¡ µµ´ŞÇØ¼­ ³¡³­ °æ¿ì¶ó¸é ºñ±³ ¹®ÀÚ¿­µµ ³¡¿¡ µµ´ŞÇØ¾ßÇÔ
         if(p == pattern.size()){
             return cache[p][s] = (s == filenames[i].size());
         }
         
-        //*ì„ ë§Œë‚œ ê²½ìš°
+        //*À» ¸¸³­ °æ¿ì
         if(pattern[p] == '*'){
-            // patternì„ 1 ì¦ê°€ì‹œì¼œì„œ ë¹„êµ || ë¬¸ìì—´ì„ 1ì¦ê°€ì‹œì¼œì„œ ë¹„êµ
+            // patternÀ» 1 Áõ°¡½ÃÄÑ¼­ ºñ±³ || ¹®ÀÚ¿­À» 1Áõ°¡½ÃÄÑ¼­ ºñ±³
             if(matching(p+1, s, i) == 1 || 
                (s < filenames[i].size() && matching(p, s+1, i) == 1)){
                 return cache[p][s] = 1;
@@ -69,7 +69,7 @@ public:
 //                }
 //            }
         }
-        // ìœ„ì˜ ì¡°ê±´ë¬¸ì´ ëª¨ë‘ í•´ë‹¹ë˜ì§€ ì•Šìœ¼ë©´ ì¼ì¹˜í•˜ì§€ ì•ŠëŠ” ë¬¸ì
+        // À§ÀÇ Á¶°Ç¹®ÀÌ ¸ğµÎ ÇØ´çµÇÁö ¾ÊÀ¸¸é ÀÏÄ¡ÇÏÁö ¾Ê´Â ¹®ÀÚ
         return cache[p][s] = 0;
     }
     

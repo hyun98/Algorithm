@@ -61,6 +61,7 @@ bool cmpZ(Planet &a, Planet &b){
 }
 
 void input(){
+    fasti
     cin >> N;
     int a, b, c;
     for(int i = 0; i < N; i++){

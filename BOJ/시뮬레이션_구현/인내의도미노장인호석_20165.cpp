@@ -41,20 +41,11 @@ void input(){
         if(i % 2 == 0){
             cin >> a >> b >> c;
             switch (c){
-            case 'E':
-                Attacker.push_back({a-1, b-1, 0});
-                break;
-            case 'W':
-                Attacker.push_back({a-1, b-1, 1});
-                break;
-            case 'S':
-                Attacker.push_back({a-1, b-1, 2});
-                break;
-            case 'N':
-                Attacker.push_back({a-1, b-1, 3});
-                break;
-            default:
-                break;
+            case 'E': Attacker.push_back({a-1, b-1, 0});break;
+            case 'W': Attacker.push_back({a-1, b-1, 1}); break;
+            case 'S': Attacker.push_back({a-1, b-1, 2}); break;
+            case 'N': Attacker.push_back({a-1, b-1, 3}); break;
+            default: break;
             }
         }
         else{
@@ -66,54 +57,17 @@ void input(){
 
 void crash_domino(int r, int c, int dir){
     int last = Map[r][c];
-    switch (dir){
-    case 0:
-        while(c < M && last){
-            last = max(last, Map[r][c]);
-            if(Map[r][c]){
-                Map[r][c] = 0;
-                score++;
-            }
-            c++;
-            last--;
+    int nr = r;
+    int nc = c;
+    while(nr >= 0 && nr < N && nc >= 0 && nc < M && last){
+        last = max(last, Map[nr][nc]);
+        if(Map[nr][nc]){
+            Map[nr][nc] = 0;
+            score++;
         }
-        break;
-    case 1:
-        while(c >= 0 && last){
-            last = max(last, Map[r][c]);
-            if(Map[r][c]){
-                Map[r][c] = 0;
-                score++;
-            }
-            c--;
-            last--;
-        }
-        break;
-    case 2:
-        while(r < N && last){
-            last = max(last, Map[r][c]);
-            if(Map[r][c]){
-                Map[r][c] = 0;
-                score++;
-            }
-            r++;
-            last--;
-        }
-        break;
-    case 3:
-        while(r >= 0 && last){
-            last = max(last, Map[r][c]);
-            if(Map[r][c]){
-                Map[r][c] = 0;
-                score++;
-            }
-            r--;
-            last--;
-        }
-        break;
-    
-    default:
-        break;
+        nr += dr[dir];
+        nc += dc[dir];
+        last--;
     }
 }
 
@@ -122,7 +76,6 @@ inline void raise_domino(int r, int c){
 }
 
 void show(){
-    
     cout << score << "\n";
     for(int r = 0; r < N; r++){
         for(int c = 0; c < M; c++){
@@ -143,6 +96,7 @@ void solve(){
 }
 
 int main(){
+    fasti
     input();
     solve();
     

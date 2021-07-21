@@ -15,7 +15,7 @@ using namespace std;
 
 int N;
 int Map[101][101];
-long long Cache[101][101];
+ll Cache[101][101];
 
 void input(){
     cin >> N;
@@ -27,7 +27,7 @@ void input(){
     memset(Cache, -1, sizeof(Cache));
 }
 
-long long dfs(pii now){
+ll dfs(pii now){
     if(now.first == N-1 && now.second == N-1){
         return 1;
     }
@@ -35,7 +35,7 @@ long long dfs(pii now){
         return 0;
     }
     
-    long long &ret = Cache[now.first][now.second];
+    ll &ret = Cache[now.first][now.second];
     if(ret != -1) return ret;
     
     ret = 0;

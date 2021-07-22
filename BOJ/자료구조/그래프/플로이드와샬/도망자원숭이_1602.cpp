@@ -53,15 +53,17 @@ void input(){
 void solve(){
     for(int r = 1; r <= N; r++){
         for(int c = 1; c <= N; c++){
+            // 자신이 도착점인 경우엔 자신의 방해시간이 걸리는 시간이 된다.
             if(r == c) res[r][c] = Bulltime[r].first;
-            else{
-                res[r][c] = dp[r][c] + max(Bulltime[r].first, Bulltime[c].first);
-            }
+            // r에서 c로가는 최소시간은 r에서 c로가는 거리의 최솟값 + r과 c중 더 오래걸리는 방해시간
+            else res[r][c] = dp[r][c] + max(Bulltime[r].first, Bulltime[c].first);
         }
     }
     
     sort(Bulltime+1, Bulltime+N+1);
     
+    // 정점 번호를 인덱스로 넣으면 해당 정점이
+    // sort된 Bulltime의 몇 번 인덱스에 위치하는지 알 수 있다.
     int Bullidx[501];
     for(int i = 1; i <= N; i++){
         Bullidx[Bulltime[i].second] = i;
@@ -69,10 +71,13 @@ void solve(){
     
     for(int i = 1; i <= N; i++){
         int via = Bulltime[i].second;
-        for(int r = 1; r <= N; r++){
+        for(int r = 1; r <= N; r++){             
             for(int c = 1; c <= N; c++){
+                // via, r, c 정점 중 가장 긴 방해시간
                 int delay = max(Bulltime[i].first, max(Bulltime[Bullidx[r]].first, Bulltime[Bullidx[c]].first));
+                // 최단 거리 계산
                 dp[r][c] = min(dp[r][c], dp[r][via] + dp[via][c]);
+                // 최단 시간 계산
                 res[r][c] = min(res[r][c], dp[r][via] + delay + dp[via][c]);
             }
         }

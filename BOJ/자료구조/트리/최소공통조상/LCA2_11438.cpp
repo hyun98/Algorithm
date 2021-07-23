@@ -9,7 +9,6 @@ bool *visit;
 int Search_LCA(int a, int b){
     if(depth[a] > depth[b]) swap(a, b);
 
-    //높이를 동일하게 맞추는 작업
     for(int i = 17; i >= 0; i--){
         if(depth[b] - depth[a] >= (1 << i)){
             b = parent[b][i];

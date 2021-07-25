@@ -17,7 +17,7 @@ int N, M;
 vector<pii > tree[40001];
 int depth[40001];
 int dist[40001];
-pii parent[40001][18];
+int parent[40001][18];
 
 vector<pii > Query;
 bool visited[40001];
@@ -38,66 +38,53 @@ void input(){
     }
 }
 
-void tree_dfs(int now, int d){
+void tree_dfs(int now, int d, int dst){
     visited[now] = true;
     depth[now] = d;
     
     for(int i = 0; i < tree[now].size(); i++){
         int next = tree[now][i].first;
         if(visited[next]) continue;
-        parent[next][0] = {now, tree[now][i].second};
-        tree_dfs(next, d+1);
+        parent[next][0] = now;
+        dist[next] = dst + tree[now][i].second;
+        tree_dfs(next, d+1, dist[next]);
     }
 }
 
 void mkparent(){
-    parent[1][0] = {0, 0};
+    parent[1][0] = 0;
     for(int i = 1; i <= 17; i++){
         for(int j = 1; j <= N; j++){
-            parent[j][i] = {parent[parent[j][i-1].first][i-1].first, \
-                            parent[j][i-1].second + parent[parent[j][i-1].first][i-1].second};
+            parent[j][i] = parent[parent[j][i-1]][i-1];
         }
     }
 }
 
 int LCA_dist(int a, int b){
-    int dist = 0;
     if(depth[a] > depth[b]) swap(a, b);
     
     for(int i = 17; i >= 0; i--){
         if(depth[b] - depth[a] >= (1 << i)){
-            dist += parent[b][i].second;
-            b = parent[b][i].first;
+            b = parent[b][i];
         }
     }
-    if(a == b) return dist;
+    if(a == b) return a;
     
     for(int i = 17; i >= 0; i--){
-        if(parent[a][i].first != parent[b][i].first){
-            dist += (parent[a][i].second + parent[b][i].second);
-            a = parent[a][i].first;
-            b = parent[b][i].first;
-        }
-        // if(parent[a][i].first == parent[b][i].first) break;
-    }
-    return dist;
-}
-
-void show(){
-    for(int i = 1; i <= N; i++){
-        for(int k = 0; k <= 17; k++){
-            cout << i << " : " << parent[i][k].first << ", " << parent[i][k].second << "\n";
+        if(parent[a][i] != parent[b][i]){
+            a = parent[a][i];
+            b = parent[b][i];
         }
     }
+    return parent[a][0];
 }
 
 void solve(){
-    tree_dfs(1, 0);
+    tree_dfs(1, 0, 0);
     mkparent();
-    show();
     
     for(auto &w : Query){
-        cout << LCA_dist(w.first, w.second) << "\n";
+        cout << dist[w.first] + dist[w.second] - 2 * dist[LCA_dist(w.first, w.second)] << "\n";
     }
 }
 

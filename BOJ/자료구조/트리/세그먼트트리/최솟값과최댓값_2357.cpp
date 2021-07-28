@@ -12,7 +12,7 @@ array<T, MAX * 4> tree;
 array<int, MAX> my_data;
 int N, M;
 
-T init(int tree_begin, int tree_end, int node){    //트리를 생성하는 함수
+T init(int tree_begin, int tree_end, int node){
     if(tree_begin == tree_end){
         tree[node].tmax = my_data[tree_begin];
         tree[node].tmin = my_data[tree_begin];

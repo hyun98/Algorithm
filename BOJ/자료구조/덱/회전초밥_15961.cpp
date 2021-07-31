@@ -36,7 +36,7 @@ void solve(){
     
     res = max(dp[0], res);
     
-    for(int i = 0; i < N; i++){
+    for(int i = 1; i < N; i++){
         int sushinum = sushi[(K+i-1)%N];
         if(!(pickedDishes[sushinum]++)) num++;
         if(!(--pickedDishes[sushi[i-1]])) num--;
@@ -57,3 +57,4 @@ int main(){
     
     return 0;
 }
+

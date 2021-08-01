@@ -13,45 +13,20 @@ typedef long long ll;
 
 using namespace std;
 
-int N, D, K, C;
-int pickedDishes[3001];
-int sushi[300001];
-int dp[300001];
+int N, arr[500001];
 
 void input(){
-    cin >> N >> D >> K >> C;
-    for(int i = 0; i < N; i++){
-        cin >> sushi[i];
+    cin >> N;
+    for(int i = 1; i <= N; i++){
+        cin >> arr[i];
     }
 }
 
-
 void solve(){
-    int num = 0, res = 0;
-    for(int i = 0; i < K; i++){
-        if(!(pickedDishes[sushi[i]]++)) num++;
-    }
-    if(!pickedDishes[C]) dp[0] = num+1;
-    else dp[0] = num;
     
-    res = max(dp[0], res);
-    
-    for(int i = 0; i < N; i++){
-        int sushinum = sushi[(K+i-1)%N];
-        if(!(pickedDishes[sushinum]++)) num++;
-        if(!(--pickedDishes[sushi[i-1]])) num--;
-        
-        if(!pickedDishes[C]) dp[i] = num+1;
-        else dp[i] = num;
-        
-        res = max(dp[i], res);
-    }
-    
-    cout << res << "\n";
 }
 
 int main(){
-    fastio
     input();
     solve();
     

@@ -45,7 +45,6 @@ struct cmp{
     }
 };
 
-// 시간을 가장 작게
 void solve(){
     priority_queue<IF, vector<IF>, cmp> pq;
     pq.push({1, 0, 0});
@@ -57,25 +56,19 @@ void solve(){
         int now_time = pq.top().time;
         pq.pop();
         
-        if(dist[now][now_cost] < now_time) continue;
-        dist[now][now_cost] = now_time;
-        
-        if(now == N){
-            cout << dist[now][now_cost] << "\n";
-            return;
-        }
+        if(dist[now][now_cost] < now_time || now_cost > M) continue;
         
         for(int i = 0; i < adj[now].size(); i++){
             int next = adj[now][i].dest;
             int next_cost = adj[now][i].cost + now_cost;
             int next_time = adj[now][i].time + now_time;
             
-            if(next_cost > M) continue;
+            if(dist[next][next_cost] <= next_time || next_cost > M) continue;
+            dist[next][next_cost] = next_time;
             pq.push({next, next_cost, next_time});
+            
         }
     }
-    
-    cout << "Poor KCM\n";
 }
 
 int main(){
@@ -84,6 +77,12 @@ int main(){
     while(T--){
         input();
         solve();
+        int res = INF;
+        for(int i = 1; i <= M; i++){
+            res = min(res, dist[N][i]);
+        }
+        if(res != INF) cout << res << "\n";
+        else cout << "Poor KCM\n";
     }
     
     return 0;

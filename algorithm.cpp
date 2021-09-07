@@ -13,54 +13,103 @@ typedef long long ll;
 
 using namespace std;
 
-int N;
-int Aline[500001];
-pii Bline[1000001];
-ll tree[4 * 500001];
+int N, M;
+vector<int> company[100001];
+int tree[100001 * 4];
+int lazy[100001 * 4];
+pii segment[100001];
+int table[100001];
 
 void input(){
-    cin >> N;
-    int a, b;
-    for(int i = 0; i < N; i++){
-        cin >> a;
-        Aline[i] = a;
-    }
+    cin >> N >> M;
+    int t;
     for(int i = 1; i <= N; i++){
-        cin >> b;
-        Bline[b] = {b, i};
+        cin >> t;
+        if(t == -1) continue;
+        company[t].push_back(i);
     }
 }
 
-void update(int startidx, int endidx, int targetidx, int node){
-    if(startidx > targetidx || targetidx > endidx) return;
-    if(startidx == endidx){
-        tree[node] = 1;
+void preorder(int node, int &idx){
+    segment[node].first = idx;
+    
+    for(int i = 0; i < company[node].size(); i++){
+        int next = company[node][i];
+        preorder(next, ++idx);
+    }
+    segment[node].second = idx;
+}
+
+void update_lazy(int startidx, int endidx, int node){
+    if(lazy[node]){
+        tree[node] += (lazy[node] * (endidx - startidx + 1));
+        if(startidx != endidx){
+            lazy[node*2] += lazy[node];
+            lazy[node*2+1] += lazy[node];
+        }
+        lazy[node] = 0;
+    }
+}
+
+void update(int startidx, int endidx, int left, int right, int node, int value){
+    update_lazy(startidx, endidx, node);
+    if(right < startidx || left > endidx) return;
+    cout << "now : " << left << " " << right << "\n";
+    cout << "se : " << startidx << " " << endidx << "\n";
+    cout << "node value : " << node << " " << value << "\n";
+    if(left <= startidx && endidx <= right){
+        tree[node] += value;
+        if(startidx != endidx){
+            lazy[node*2] += value;
+            lazy[node*2+1] += value;
+        }
+        cout << tree[node] << "\n";
         return;
     }
-    int mid = (startidx + endidx) / 2;
-    update(startidx, mid, targetidx, node*2);
-    update(mid+1, endidx, targetidx, node*2+1);
-    tree[node] = tree[node*2] + tree[node*2+1];
-}
-
-ll getQuery(int startidx, int endidx, int left, int right, int node){
-    if(left <= startidx && endidx <= right) return tree[node];
-    if(right < startidx || left > endidx) return 0;
-    int mid = (startidx + endidx) / 2;
+    int mid = (startidx+1 + endidx) / 2;
     
-    return getQuery(startidx, mid, left, right, node*2) + \
-           getQuery(mid+1, endidx, left, right, node*2+1);
+    update(startidx+1, mid, left, right, node*2, value);
+    update(mid+1, endidx, left, right, node*2+1, value);
+    // tree[node] = tree[node*2] + tree[node*2+1];
+    
+    cout << "tree[" << node << "] : " << tree[node] << "\n";
 }
 
+int getQuery(int startidx, int endidx, int target, int node){
+    update_lazy(startidx, endidx, node);
+    if(target < startidx || target > endidx) return 0;
+    if(target <= startidx && endidx <= target) return tree[node];
+    
+    int mid = (startidx+1 + endidx) / 2;
+    
+    return getQuery(startidx+1, mid, target, node*2) + \
+           getQuery(mid+1, endidx, target, node*2+1);
+}
 
 void solve(){
-    ll answer = 0;
-    for(int i = 0; i < N; i++){
-        answer += getQuery(1, N, Bline[Aline[i]].second, N, 1);
-        update(1, N, Bline[Aline[i]].second, 1);
+    int idx = 1;
+    preorder(1, idx);
+    for(int k = 1; k <= N; k++){
+        cout << segment[k].first << "\n";
     }
-    
-    cout << answer;
+    int s, i, w;
+    pii seg;
+    for(int j = 0; j < M; j++){
+        cin >> s;
+        if(s == 1){
+            cin >> i >> w;
+            // cout << "table : " << table[i] << "\n"; 
+            seg = segment[table[i]];
+            // cout << "seg "<< i <<" : " << seg.first << " " << seg.second << "\n";
+            update(1, N, seg.first, seg.second, 1, w);
+            // cout << "tree : " <<  tree[seg.first] << "\n";
+        }
+        else{
+            cin >> i;
+            seg = segment[i];
+            cout << "ans : " << getQuery(1, N, seg.first, 1) << "\n";
+        }
+    }
 }
 
 int main(){
@@ -70,3 +119,15 @@ int main(){
     
     return 0;
 }
+// 6 10
+// -1 1 1 3 2 2
+// 1 2 2
+// 1 5 5
+// 1 6 3
+// 1 4 4
+// 2 1
+// 2 2
+// 2 3
+// 2 4
+// 2 5
+// 2 6

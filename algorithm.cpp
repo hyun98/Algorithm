@@ -1,31 +1,43 @@
 #include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-#include <cstring>
-#define fasti ios_base::sync_with_stdio(false); cin.tie(0);
-#define fastio ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-#define INF 1e9+7
-#define pii pair<int, int>
-
-typedef long long ll;
-// typedef pair<int, int> pii;
-
 using namespace std;
 
+int N;
+int qr[16], qc[16];
 
-
-void input(){
+// r, c 좌표에 퀸을 놓으려고 한다
+int Queen(int r, int c){
     
-}
-
-void solve(){
+    for(int i = 0; i < r; i++){
+        if(qr[i] == r) return 0; // i번째 행에 퀸이 있는 경우
+        if(qc[i] == c) return 0; // i번째 열에 퀸이 있는 경우
+        if(abs(qr[i] - r) == abs(qc[i] - c)) return 0; // 대각선 겹침
+    }
     
+    if(r == N-1) return 1;
+    
+    // 조건을 모두 통과했으면 r, c에 퀸을 놓는다
+    qr[r] = r;
+    qc[r] = c;
+    
+    int ret = 0;
+    // if(c+1 == N) ret += Queen(r+1, 0);
+    // else ret += Queen(r, c+1);
+    for(int i = 0; i < N; i++){
+        ret += Queen(r+1, i);
+    }
+    return ret;
 }
 
 int main(){
-    input();
-    solve();
+    cin >> N;
+    int r = 0;
     
+    // r += Queen(0, 0);
+    
+    for(int i = 0; i < N; i++){
+        r += Queen(0, i);
+    }
+    
+    cout << r << endl;
     return 0;
 }

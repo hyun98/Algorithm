@@ -1,145 +1,98 @@
 #include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
 #include <cstring>
+#define fasti ios_base::sync_with_stdio(false); cin.tie(0);
 #define fastio ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define INF 1e9+7
 #define pii pair<int, int>
+
+typedef long long ll;
+// typedef pair<int, int> pii;
 
 using namespace std;
 
+int N, M, K;
+int Map[1001][1001];
+int dist[1001][1001][11];
+int dr[4] = {0, 0, 1, -1}, dc[4] = {1, -1, 0, 0};
 
-int N, puzzlecnt;
-int Map[10][10];
-int row[10][10];
-int col[10][10];
-int box[10][10];
-int dr[2] = {0, 1}, dc[2] = {1, 0};
-bool flag;
-bool check[10][10];
-
-
-pii parse_coord(string s){
-    pii ret;
-    ret.first = s[0] - 'A';
-    ret.second = s[1] - '1';
-    return ret;
-}
-
-inline int boxnum(int r, int c){
-    return (r/3)*3 + (c/3);
-}
+struct P{
+    int r, c, movecnt, wallcnt, daynight; // 1 is day, -1 is night
+};
 
 void input(){
-    flag = false;
-    memset(Map, 0, sizeof(Map));
-    memset(check, 0, sizeof(check));
-    int u, v;
-    pii coord;
-    string lu, lv;
+    cin >> N >> M >> K;
+    memset(Map, -1, sizeof(Map));
+    string str;
     for(int i = 0; i < N; i++){
-        cin >> u >> lu >> v >> lv;
-        coord = parse_coord(lu);
-        Map[coord.first][coord.second] = u;
-        coord = parse_coord(lv);
-        Map[coord.first][coord.second] = v;
-        check[u][v] = check[v][u] = true;
-    }
-    for(int i = 1; i <= 9; i++){
-        cin >> lu;
-        coord = parse_coord(lu);
-        Map[coord.first][coord.second] = i;
-    }
-}
-
-// bool is_possible(int r, int c, int num){
-//     return !row[r][num] && !col[c][num] && !box[boxnum(r, c)][num];
-// }
-
-bool is_possible(int r, int c){
-    // row, col check
-    for(int i = 0; i < 9; i++){
-        if(Map[r][c] == Map[r][i] && i != c) return false;
-        if(Map[r][c] == Map[i][c] && i != r) return false;
-    }
-    
-    int sr = (r / 3) * 3;
-    int sc = (c / 3) * 3;
-    
-    // box check
-    for(int i = sr; i < sr + 3; i++){
-        for(int j = sc; j < sc + 3; j++){
-            if(i == r && j == c) continue;
-            if(Map[r][c] == Map[i][j]) return false;
+        cin >> str;
+        for(int j = 0; j < M; j++){
+            Map[i][j] = str[j] - '0';
         }
     }
-    
-    return true;
-}
-
-void print_Map(){
-    cout << "Puzzle " << puzzlecnt << "\n";
-    for(int r = 0; r < 9; r++){
-        for(int c = 0; c < 9; c++){
-            cout << Map[r][c];
+    for(int r = 0; r < N; r++){
+        for(int c = 0; c < M; c++){
+            for(int k = 0; k < 11; k++){
+                dist[r][c][k] = INF;
+            }
         }
-        cout << "\n";
     }
 }
 
-void dfs(int cnt){
-    if(flag) return;
-    if(cnt == 81){
-        print_Map();
-        flag = true;
-        return;
-    }
+void bfs(){
+    queue<P> que;
+    que.push({0, 0, 1, 0, 1});
+    dist[0][0][0] = 1;
     
-    int r = cnt / 9;
-    int c = cnt % 9;
-
-    if(!Map[r][c]){
-        // right, down
-        for(int k = 0; k < 2; k++){
-            int nr = r + dr[k];
-            int nc = c + dc[k];
-            if(nr < 0 || nr >= 9 || nc < 0 || nc >= 9 || Map[nr][nc]) continue;
+    while(!que.empty()){
+        int now_r = que.front().r;
+        int now_c = que.front().c;
+        int now_move = que.front().movecnt;
+        int now_wall = que.front().wallcnt;
+        int now_daynight = que.front().daynight;
+        que.pop();
+        
+        if(now_r == N-1 && now_c == M-1){
+            cout << now_move;
+            return;
+        }
+        
+        for(int k = 0; k < 4; k++){
+            int nr = now_r + dr[k];
+            int nc = now_c + dc[k];
+            int nd = (now_daynight == 0 ? 1:0);
+            if(nr < 0 || nr >= N || nc < 0 || nc >= M) continue;
             
-            for(int i = 1; i <= 9; i++){
-                for(int j = 1; j <= 9; j++){
-                    if(check[i][j] || i == j) continue;
-                    Map[r][c] = i;
-                    Map[nr][nc] = j;
-                    check[i][j] = check[j][i] = true;
-                    
-                    if(is_possible(r, c) && is_possible(nr, nc)){
-                        
-                        // row[r][i] = col[c][i] = box[boxnum(r, c)][i] = true;
-                        // row[nr][j] = col[nc][j] = box[boxnum(nr, nc)][j] = true;
-                        
-                        dfs(cnt+1);
-                        if(flag) return;
-                        
-                        // row[r][i] = col[c][i] = box[boxnum(r, c)][i] = false;
-                        // row[nr][j] = col[nc][j] = box[boxnum(nr, nc)][j] = false;
-                        
-                    }
-                    check[i][j] = check[j][i] = false;
-                    Map[r][c] = Map[nr][nc] = 0;
+            // 벽을 부술 수 있을 때 (현재 낮)
+            if(Map[nr][nc] && now_daynight){
+                if(now_wall+1 <= K && dist[nr][nc][now_wall+1] > now_move+1){
+                    dist[nr][nc][now_wall+1] = now_move+1;
+                    que.push({nr, nc, now_move+1, now_wall+1, nd});
                 }
             }
+            // 벽을 앞에 두고 기다릴 때 (현재 밤)
+            if(Map[nr][nc] && !now_daynight){
+                que.push({now_r, now_c, now_move+1, now_wall, nd});
+            }
             
+            // 열린 공간일 때
+            if(!Map[nr][nc]){
+                if(dist[nr][nc][now_wall] > now_move+1){
+                    dist[nr][nc][now_wall] = now_move+1;
+                    que.push({nr, nc, now_move+1, now_wall, nd});
+                }
+            }
         }
     }
-    else dfs(cnt+1);
+    cout << -1;
 }
 
 int main(){
-    int puzzle = 1;
-    cin >> N;
-    while(N){
-        puzzlecnt++;
-        input();
-        dfs(0);
-        cin >> N;
-    }
+    fastio
+    input();
+    bfs();
     
     return 0;
 }

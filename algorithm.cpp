@@ -13,58 +13,19 @@ typedef long long ll;
 
 using namespace std;
 
-int N;
-int dp[1001][1001];
-vector<int> coke;
+
 
 void input(){
-    cin >> N;
-    int c;
-    for(int i = 0; i < N; i++){
-        cin >> c;
-        coke.push_back(c);
-    }
     
-    memset(dp, -1, sizeof(dp));
 }
 
-int solve(int st, int ed){
-    if(st >= ed) return 0;
+void solve(){
     
-    int &ret = dp[st][ed];
-    if(ret != -1) return ret;
-    
-    ret = 0;
-    
-    for(int i = st; i <= ed; i++){
-        int cnt = 0;
-        if(coke[st] == coke[i] && st != i){
-            cnt = (solve(st+1, i-1) + solve(i+1, ed) + 1);
-            ret = max(ret, cnt);
-        }
-        if(coke[i] == coke[ed] && i != ed){
-            cnt = (solve(st, i-1) + solve(i+1, ed-1) + 1);
-            ret = max(ret, cnt);
-        }
-        else{
-            cnt = (solve(st, i) + solve(i, ed));
-            ret = max(ret, cnt);
-        }
-    }
-    
-    return ret;
 }
 
 int main(){
     input();
-    for(int i = 0; i < N-1; i++){
-        for(int j = i+1; j < N; j++){
-            solve(i, j);
-            // cout << "dp["<<i<<"]["<<j<<"] : "<< dp[i][j] << "\n";
-        }
-    }
-    
-    cout << dp[0][N-1] << "\n";
+    solve();
     
     return 0;
 }

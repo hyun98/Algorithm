@@ -18,7 +18,7 @@ void turn(int r, int c){
 }
 
 bool is_solved(){
-    // ÇöÀç ¿­ÀÇ ¹Ù·Î À§ Àü±¸°¡ 1ÀÌ¸é ²¨¾ßÇÏ¹Ç·Î ÇöÀç Àü±¸½ºÀ§Ä¡¸¦ ´©¸¥´Ù
+    // í˜„ìž¬ ì—´ì˜ ë°”ë¡œ ìœ„ ì „êµ¬ê°€ 1ì´ë©´ êº¼ì•¼í•˜ë¯€ë¡œ í˜„ìž¬ ì „êµ¬ìŠ¤ìœ„ì¹˜ë¥¼ ëˆ„ë¥¸ë‹¤
     for(int r = 1; r < 10; r++){
         for(int c = 0; c < 10; c++){
             if(TMap[r-1][c]){
@@ -28,7 +28,7 @@ bool is_solved(){
         }
     }
     
-    // ¸¶Áö¸· Çà¿¡ Àü±¸°¡ ÄÑÁ®ÀÖÀ¸¸é ²ø ¼ö ¾øÀ¸¹Ç·Î false
+    // ë§ˆì§€ë§‰ í–‰ì— ì „êµ¬ê°€ ì¼œì ¸ìžˆìœ¼ë©´ ëŒ ìˆ˜ ì—†ìœ¼ë¯€ë¡œ false
     for(int c = 0; c < 10; c++){
         if(TMap[9][c]) return false;
     }
@@ -38,7 +38,7 @@ bool is_solved(){
 
 void solve(){
     for(int k = 0; k < 1024; k++){
-        // Map º¹»ç
+        // Map ë³µì‚¬
         for(int r = 0 ; r < 10 ; r++){
             for(int c = 0 ; c < 10 ; c++){
                 TMap[r][c] = Map[r][c];
@@ -60,7 +60,7 @@ void solve(){
     else cout << result;
 }
 
-// dfs¸¦ »ç¿ëÇÏ¸é ÀÌ ¹®Á¦¿¡¼­ Àü±¸ÀÇ »óÅÂ¸¦ ¹éÆ®·¡Å·ÇÏ±â Èûµé¾î º¸ÀÎ´Ù....
+// dfsë¥¼ ì‚¬ìš©í•˜ë©´ ì´ ë¬¸ì œì—ì„œ ì „êµ¬ì˜ ìƒíƒœë¥¼ ë°±íŠ¸ëž˜í‚¹í•˜ê¸° íž˜ë“¤ì–´ ë³´ì¸ë‹¤....
 
 //void dfs(int r, int c){
 //    if(c == 10){

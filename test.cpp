@@ -15,20 +15,7 @@ using namespace std;
 
 
 void solve(){
-    list<vector<int>> len;
-    for(int i = 0; i < 10; i++){
-        vector<int> vec;
-        for(int j = 0; j < 10; j++){
-            vec.push_back(10*i + j);
-        }
-        len.push_back(vec);
-        
-    }
-    for(auto it = len.begin(); it != len.end(); it++){
-        for(auto w: *it){
-            cout << w << "\n";
-        }
-    }
+    
 }
 
 int main(){

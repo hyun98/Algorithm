@@ -1,27 +1,26 @@
 #include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <cstring>
+#define fasti ios_base::sync_with_stdio(false); cin.tie(0);
+#define fastio ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define INF 1e9+7
+#define pii pair<int, int>
 
 typedef long long ll;
+// typedef pair<int, int> pii;
 
 using namespace std;
 
-ll X, K;
+
 
 void input(){
-    cin >> X >> K;
+    
 }
 
 void solve(){
-    ll Y = 0;
-    int kidx = 0;
-    for(int i = 0; i < 65; i++){
-        if((X >> i) & 1LL) continue;
-        if((K >> kidx) & 1LL){
-            Y |= (1LL << i);
-        }
-        kidx++;
-    }
     
-    cout << Y;
 }
 
 int main(){

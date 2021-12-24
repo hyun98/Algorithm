@@ -13,60 +13,41 @@ typedef long long ll;
 
 using namespace std;
 
-int N, Q;
+int R, C, cnt;
+int Map[21][21];
+bool visited[21][21], temp[21][21];
+int dr[4] = {0, 0, 1, -1}, dc[4] = {1, -1, 0, 0};
 
-vector<pii > adj[5001];
 
 void input(){
-    cin >> N >> Q;
-    int p, q, r;
-    for(int i = 0; i < N-1; i++){
-        cin >> p >> q >> r;
-        adj[p].push_back({r, q});
-        adj[q].push_back({r, p});
+    cin >> R >> C;
+    string str;
+    for(int i = 0; i < R; i++){
+        cin >> str;
+        for(int j = 0; j < C; j++){
+            Map[i][j] = str[j] - 'A';
+        }
     }
 }
 
-int bfs(int k, int v){
-    int cnt = 0;
+bool is_valid(int r, int c){
+    if(r < 0 || r >= R || c < 0 || c >= C) return false;
+    if(visited[r][c] || temp[r][c]) return false;
+}
+
+void dfs(pii now){
     
-    bool visited[5001];
-    memset(visited, 0, sizeof(visited));
-    visited[v] = true;
-    
-    queue<int> que;
-    que.push(v);
-    
-    while(!que.empty()){
-        int now = que.front();
-        que.pop();
+    for(int k = 0; k < 4; k++){
         
-        for(int i = 0; i < adj[now].size(); i++){
-            int next = adj[now][i].second;
-            int next_road = adj[now][i].first;
-            
-            if(visited[next]) continue;
-            if(next_road < k) continue;
-            
-            cnt++;
-            visited[next] = true;
-            que.push(next);
-        }
     }
     
-    return cnt;
 }
 
 void solve(){
-    int k, v;
-    for(int i = 0; i < Q; i++){
-        cin >> k >> v;
-        cout << bfs(k, v) << "\n";
-    }
+    dfs({0, 0})
 }
 
 int main(){
-    fastio
     input();
     solve();
     

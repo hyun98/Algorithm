@@ -36,7 +36,9 @@ bool is_valid(int r, int c){
 }
 
 void dfs(pii now){
-    
+    if(now == cnt){
+        continue
+    }
     for(int k = 0; k < 4; k++){
         
     }

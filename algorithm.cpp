@@ -5,58 +5,98 @@
 #include <cstring>
 #define fasti ios_base::sync_with_stdio(false); cin.tie(0);
 #define fastio ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-#define INF 1e9+7
-#define pii pair<int, int>
-
+#define INF 1e15+7
 typedef long long ll;
-// typedef pair<int, int> pii;
+#define pli pair<ll, int>
 
 using namespace std;
 
-int R, C, ans;
-int Map[21][21];
-bool visited[21][21], visited_alpha[26];
-int dr[4] = {0, 0, 1, -1}, dc[4] = {1, -1, 0, 0};
+struct Edge{
+    int kcnt;
+    int dst;
+    ll cost;
+};
 
+struct cmp{
+    bool operator()(Edge &a, Edge &b){
+        return a.cost > b.cost;
+    }
+};
+
+int N, M, K;
+vector<pli > adj[10001];
+ll distTime[10001][21];
 
 void input(){
-    cin >> R >> C;
-    string str;
-    for(int i = 0; i < R; i++){
-        cin >> str;
-        for(int j = 0; j < C; j++){
-            Map[i][j] = str[j] - 'A';
+    cin >> N >> M >> K;
+    int u, v;
+    ll c;
+    for(int i = 0; i < M; i++){
+        cin >> u >> v >> c;
+        adj[u].push_back({c, v});
+        adj[v].push_back({c, u});
+    }
+    
+    for(int i = 1; i <= N; i++){
+        for(int j = 0; j <= K; j++){
+            distTime[i][j] = INF;
         }
     }
 }
 
-bool is_valid(int r, int c){
-    if(r < 0 || r >= R || c < 0 || c >= C) return false;
-    if(visited[r][c] || visited_alpha[Map[r][c]]) return false;
-    return true;
-}
-
-void dfs(int r, int c, int cnt){
-    ans = max(ans, cnt);
-    
-    visited_alpha[Map[r][c]] = true;
-    visited[r][c] = true;
-    
-    for(int k = 0; k < 4; k++){
-        int nr = r + dr[k];
-        int nc = c + dc[k];
-        if(!is_valid(nr, nc)) continue;
-        dfs(nr, nc, cnt+1);
+void printAns(){
+    ll ans = INF;
+    for(int i = 0; i <= K; i++){
+        ans = min(ans, distTime[N][i]);
     }
     
-    visited[r][c] = false;
-    visited_alpha[Map[r][c]] = false;
+    cout << ans;
+}
+
+void dijkstra(){
+    priority_queue<Edge, vector<Edge>, cmp> pq;
+    
+    Edge new_edge;
+    new_edge.cost = 0;
+    new_edge.kcnt = 0;
+    new_edge.dst = 1;
+    
+    pq.push(new_edge);
+    
+    // 1번에서 시작하므로 0
+    distTime[1][0] = 0;
+    
+    while(!pq.empty()){
+        int now = pq.top().dst;
+        int kUse = pq.top().kcnt;
+        ll now_cost = pq.top().cost;
+        pq.pop();
+        
+        if(distTime[now][kUse] < now_cost) continue;
+        
+        for(int i = 0; i < adj[now].size(); i++){
+            int next = adj[now][i].second;
+            ll next_cost = now_cost + adj[now][i].first;
+            
+            // 도로 건설하는 경우
+            // 현재 비용 그대로 유지하면서 다음 도로로 이동.
+            if(K > kUse && now_cost < distTime[next][kUse+1]){
+                distTime[next][kUse+1] = now_cost;
+                pq.push({kUse+1, next, now_cost});
+            }
+            
+            // 그냥 비용이 감소할 때
+            if(next_cost < distTime[next][kUse]){
+                distTime[next][kUse] = next_cost;
+                pq.push({kUse, next, next_cost});
+            }
+        }
+    }
 }
 
 void solve(){
-    dfs(0, 0, 1);
-    
-    cout << ans;
+    dijkstra();
+    printAns();
 }
 
 int main(){

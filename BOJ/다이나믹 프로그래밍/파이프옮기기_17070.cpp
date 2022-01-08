@@ -5,6 +5,9 @@ using namespace std;
 int N;
 int House[18][18];
 int dp[18][18][3];
+int dr[3] = {1, 0, 1};
+int dc[3] = {0, 1, 1};
+
 
 void init(){
     cin >> N;
@@ -17,10 +20,11 @@ void init(){
     }
 }
 
-//before -> °¡·Î : 0, ¼¼·Î : 1, ´ë°¢¼± : 2
-// row, col¿¡¼­ N, NÀ¸·Î °¥ ¼ö ÀÖ´Â °æ¿ì¸¦ ¹İÈ¯
+//before -> ê°€ë¡œ : 0, ì„¸ë¡œ : 1, ëŒ€ê°ì„  : 2
+// row, colì—ì„œ N, Nìœ¼ë¡œ ê°ˆ ìˆ˜ ìˆëŠ” ê²½ìš°ë¥¼ ë°˜í™˜
 int pipe(int before, int row, int col){
 
+    
     if(row == N && col == N){
         return 1;
     }
@@ -28,32 +32,32 @@ int pipe(int before, int row, int col){
     if(ret != -1) return ret;
     ret = 0;
     
-//    cout << "ÇöÀç " << row << ", " << col;
+//    cout << "í˜„ì¬ " << row << ", " << col;
     if(before == 0){
-        if(House[row+1][col] == 0 && House[row][col+1] == 0 && House[row+1][col+1] == 0){   // ´ë°¢¼± ÀÌµ¿°¡´É
+        if(House[row+1][col] == 0 && House[row][col+1] == 0 && House[row+1][col+1] == 0){   // ëŒ€ê°ì„  ì´ë™ê°€ëŠ¥
             ret += pipe(2, row+1, col+1);
         } 
-        if(House[row][col+1] == 0){     // °¡·Î ÀÌµ¿ °¡´É
+        if(House[row][col+1] == 0){     // ê°€ë¡œ ì´ë™ ê°€ëŠ¥
             ret += pipe(0, row, col+1);
         }
         
     }
     else if(before == 1){
-        if(House[row+1][col] == 0 && House[row][col+1] == 0 && House[row+1][col+1] == 0){   // ´ë°¢¼± ÀÌµ¿°¡´É
+        if(House[row+1][col] == 0 && House[row][col+1] == 0 && House[row+1][col+1] == 0){   // ëŒ€ê°ì„  ì´ë™ê°€ëŠ¥
             ret += pipe(2, row+1, col+1);
         }
-        if(House[row+1][col] == 0){     // ¼¼·Î ÀÌµ¿ °¡´É
+        if(House[row+1][col] == 0){     // ì„¸ë¡œ ì´ë™ ê°€ëŠ¥
             ret += pipe(1, row+1, col);
         }
     }
     else{
-        if(House[row+1][col] == 0 && House[row][col+1] == 0 && House[row+1][col+1] == 0){   // ´ë°¢¼± ÀÌµ¿°¡´É
+        if(House[row+1][col] == 0 && House[row][col+1] == 0 && House[row+1][col+1] == 0){   // ëŒ€ê°ì„  ì´ë™ê°€ëŠ¥
             ret += pipe(2, row+1, col+1);
         } 
-        if(House[row][col+1] == 0){     // °¡·Î ÀÌµ¿ °¡´É
+        if(House[row][col+1] == 0){     // ê°€ë¡œ ì´ë™ ê°€ëŠ¥
             ret += pipe(0, row, col+1);
         }
-        if(House[row+1][col] == 0){     // ¼¼·Î ÀÌµ¿ °¡´É
+        if(House[row+1][col] == 0){     // ì„¸ë¡œ ì´ë™ ê°€ëŠ¥
             ret += pipe(1, row+1, col);
         }
     }

@@ -53,21 +53,43 @@ void solve(){
             int next = adj[now][i];
             if(Cnodecnt[next] == Cnodecnt[now]){
                 route[next] += route[now];
-                cout << route[next] << "\n";
+                cout << "same\n";
+                cout << "now : " << now << "\n";
+                cout << "next : " << next << "\n";
+                cout << "route[next] : " << route[next] << "\n";
             }
             else if(Cnodecnt[next] < Cnodecnt[now]){
                 Cnodecnt[next] = Cnodecnt[now];
                 route[next] = route[now];
+                cout << "next < now\n";
+                cout << "now : " << now << "\n";
+                cout << "next : " << next << "\n";
+                cout << "route[next] : " << route[next] << "\n";
             }
             if(--indegree[next]== 0) que.push(next);
         }
     }
 }
-
+// 8 12
+// 1 2
+// 1 3
+// 1 4
+// 1 5
+// 2 6
+// 3 6
+// 4 7
+// 5 7
+// 6 8
+// 7 9
+// 8 10
+// 9 10
+// 1 10 4
+// 6 7 8 9
 int main(){
     fastio
     input();
     solve();
+    cout << "Cnode[B]" << Cnodecnt[B] << "\n";
     if(Cnodecnt[B] == mustVisit.size()) cout << route[B];
     else cout << 0;
     

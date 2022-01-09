@@ -70,6 +70,7 @@ void solve(){
         right = rightQuery(0, NUM, 1, x);
         la = left.first * x - left.second;
         ra = right.second - x * right.first;
+        cout << la << ", " << ra << '\n';
         makeTree(0, NUM, 1, x);
         
         if((la + ra) == 0) continue;

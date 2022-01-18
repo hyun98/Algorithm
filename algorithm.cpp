@@ -13,10 +13,15 @@ typedef long long ll;
 
 using namespace std;
 
-
+int N;
+int dist[50001];
+int max_dist = 0;
 
 void input(){
-    
+    cin >> N;
+    for(int i = 0; i < N; i++){
+        cin >> dist[i];
+    }
 }
 
 void solve(){

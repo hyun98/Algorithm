@@ -1,39 +1,31 @@
-#include <string>
+#include <iostream>
 #include <vector>
 #include <queue>
-#include <iostream>
-
+#include <algorithm>
+#include <cstring>
+#define fasti ios_base::sync_with_stdio(false); cin.tie(0);
+#define fastio ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define INF 1e9+7
 #define pii pair<int, int>
+
+typedef long long ll;
+// typedef pair<int, int> pii;
 
 using namespace std;
 
-int solution(int bridge_length, int weight, vector<int> truck_weights) {
-    int time = 0;
-    queue<int> que;
+
+
+void input(){
     
-    int weightSum = 0;
+}
+
+void solve(){
     
-    int i = 0;
-    while(true){
-        if(i == truck_weights.size()){
-            time += bridge_length;
-            break;
-        }
-        int now_weight = truck_weights[i];
-        
-        if(que.size() == bridge_length){
-            weightSum -= que.front();
-            que.pop();
-        }
-        
-        if(weightSum + now_weight <= weight){
-            weightSum += now_weight;
-            que.push(now_weight);
-            i++;
-        }
-        else que.push(0);
-        
-        time++;
-    }
-    return time;
+}
+
+int main(){
+    input();
+    solve();
+    
+    return 0;
 }

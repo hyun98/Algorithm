@@ -13,17 +13,34 @@ typedef long long ll;
 
 using namespace std;
 
-
+int N, K;
+int nums[100001];
+int sums[100010];
 
 void input(){
-    
+    cin >> N >> K;
+    for(int i = 1; i <= N; i++){
+        cin >> nums[i];
+    }
 }
 
 void solve(){
+    int answer = -INF;
     
+    for(int i = 1; i <= N; i++){
+        sums[i] += (nums[i] + sums[i-1]);
+        int temp = sums[i];
+        if(i >= K){
+            temp -= sums[i-K];
+            answer = max(answer, temp);
+        }
+    }
+    
+    cout << answer;
 }
 
 int main(){
+    fastio
     input();
     solve();
     

@@ -13,13 +13,36 @@ typedef long long ll;
 
 using namespace std;
 
-
+int N, M;
+int arr[100001];
+int psum[100001];
+vector<pii > query;
 
 void input(){
+    cin >> N;
     
+    for(int i = 1; i <= N; i++){
+        cin >> arr[i];
+    }
+    
+    cin >> M;
+    
+    int s, e;
+    for(int i = 0; i < M; i++){
+        cin >> s >> e;
+        query.push_back({s, e});
+    }
 }
 
 void solve(){
+    
+    for(int i = 1; i <= N; i++){
+        psum[i] = arr[i] + psum[i-1];
+    }
+    
+    for(auto &q: query){
+        cout << psum[q.second] - psum[q.first-1] << '\n';
+    }
     
 }
 

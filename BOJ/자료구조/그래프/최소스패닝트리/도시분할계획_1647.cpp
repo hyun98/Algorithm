@@ -21,7 +21,7 @@ bool compare(Line &a, Line &b){
 
 int find_topnode(int a){
     if(Node[a] < 0) return a;
-    return Node[a] = find_topnode(Node[a]);
+    return find_topnode(Node[a]);
 }
 
 bool is_cycle(int a, int b){
@@ -50,7 +50,6 @@ void solve(){
         if(cnt == V-1) break;
         va = Edge[i].st;
         vb = Edge[i].ed;
-       
         if(!is_cycle(va, vb)){
             Union_node(va, vb);
             result += Edge[i].value;

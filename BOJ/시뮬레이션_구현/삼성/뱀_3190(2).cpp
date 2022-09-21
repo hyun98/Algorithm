@@ -4,7 +4,7 @@ using namespace std;
 
 int N, K, L, X[101];
 int r = 0, c = 0, d = 0, z = 0, result = 0;
-// ¹ìÀÇ Çà, ¿­, ¹æÇâ, È¸Àü ,°á°ú°ª ½Ã°£
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, È¸ï¿½ï¿½ ,ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 char C[101];
 int board[100][100] = {0, };
 const int drow[] = {0, 0, 1, -1}, dcol[] = {1, -1, 0, 0};   //0:right,  1:left,  2:bottom,  3:top
@@ -13,19 +13,19 @@ const int lft[] = {3, 2, 0, 1}, rht[] = {2, 3, 1, 0};
 queue<pair<int, int>> snake;
 
 void solve(){
-    board[r][c] = 1;    //¹ì Ã¹ ½ÃÀÛ
+    board[r][c] = 1;    //ï¿½ï¿½ Ã¹ ï¿½ï¿½ï¿½ï¿½
     snake.push({r, c});
 
     while(true){
         r += drow[d], c += dcol[d];
         result++;
         if(r < 0 || r >= N || c < 0 || c >= N || board[r][c] == 1){
-        // ¹ìÀÇ ¸Ó¸®ÀÇ Çà°ú ¿­ ÁÂÇ¥°¡ board¸¦ ¹þ¾î³µÀ»¶§ + ÀÚ½ÅÀÇ ¸öÅë°ú ºÎµúÇûÀ» ¶§
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ boardï¿½ï¿½ ï¿½ï¿½ï¿½î³µï¿½ï¿½ï¿½ï¿½ + ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             cout << result;
             return;
         }
         //
-        if(board[r][c] == 0){   //»ç°ú x, ÀÚ½ÅÀÇ ¸ö x
+        if(board[r][c] == 0){   //ï¿½ï¿½ï¿½ x, ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ x
             int nx = snake.front().first, ny = snake.front().second;
             snake.pop();
             board[nx][ny] = 0;
@@ -41,6 +41,14 @@ void solve(){
             }
             z++;
         }
+        
+        // dir : 0, 1, 2, 3 (ì¸ë±ìŠ¤)
+        if(NextDir = "LEFT"){
+            dir = lft[dir];
+        }
+        else{
+            dir = rht[dir];
+        }
     }
 }
 
@@ -49,7 +57,7 @@ int main(){
     for(int i = 0; i < K; i++){
         int row, col;
         cin >> row >> col;
-        board[row-1][col-1] = 2;    //»ç°ú Á¸Àç
+        board[row-1][col-1] = 2;    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     cin >> L;
